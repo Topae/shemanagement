@@ -34,3 +34,8 @@ Route::get('/she-policies', function () {
 
 
 Route::get('/training-materials', [TrainingMaterialsController::class, 'index'])->name('training.materials');
+
+// Hyari Hatto page without controller
+Route::get('/she/hyari-hatto', function () {
+    return view('she.hyari_hatto');
+})->name('she.hyarihatto');

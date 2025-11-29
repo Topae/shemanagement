@@ -11,11 +11,17 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <!-- Bootstrap CSS (opsional, jika butuh grid/card) -->
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        /* === Sidebar Modern UI === */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* SIDEBAR */
         .sidebar {
             width: 260px;
             background: linear-gradient(180deg, #717d8b 0%, #64707e 100%);
@@ -26,9 +32,9 @@
             left: 0;
             padding: 24px 0;
             box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
-            font-family: 'Poppins', sans-serif;
             display: flex;
             flex-direction: column;
+            z-index: 999;
         }
 
         .brand {
@@ -38,7 +44,6 @@
             padding: 0 1.25rem 2rem;
             letter-spacing: -1px;
             color: white;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
 
         .menu {
@@ -46,10 +51,6 @@
             padding: 0 0 2rem;
             margin: 0;
             flex: 1;
-        }
-
-        .menu li {
-            margin: 0;
         }
 
         .menu a {
@@ -61,27 +62,19 @@
             text-decoration: none;
             font-weight: 500;
             font-size: 1rem;
-            transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            position: relative;
+            transition: 0.25s;
             border-left: 4px solid transparent;
         }
 
         .menu a:hover {
             background: rgba(255, 255, 255, 0.12);
             color: white;
-            transform: translateX(4px);
         }
 
         .menu a.active {
             background: rgba(255, 255, 255, 0.2);
             color: white;
             border-left-color: #60a5fa;
-        }
-
-        .menu a i {
-            font-size: 1.25rem;
-            min-width: 24px;
-            text-align: center;
         }
 
         .logout {
@@ -96,63 +89,61 @@
             border: none;
             border-radius: 8px;
             font-weight: 600;
-            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+        }
+
+        /* HEADER FIX */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 260px;     /* karena sidebar 260px */
+            width: calc(100% - 260px);
+            height: 65px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
             display: flex;
             align-items: center;
-            gap: 12px;
-            box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3);
+            padding: 0 20px;
+            z-index: 998;
         }
 
-        .logout-btn:hover {
-            background: #b91c1c;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 14px rgba(220, 38, 38, 0.4);
-        }
-
-        .logout-btn i {
-            font-size: 1.1rem;
+        /* CONTENT */
+        .content-wrapper {
+            margin-left: 260px;
+            padding: 25px;
+            padding-top: 95px; /* ↓ turun karena header tinggi 65px */
         }
     </style>
 </head>
+
 <body>
 
-    <!-- Sidebar (Struktur TIDAK DIUBAH) -->
+    <!-- SIDEBAR -->
     <nav class="sidebar">
-        <div class="brand">AICC</div>
+        <div class="brand">
+            <img src="{{ asset('template/logo/logo.png') }}" alt="AICC Logo"
+                 style="max-width: 160px; height: auto; display: block; margin: 0 auto;">
+        </div>
 
         <ul class="menu">
             <li>
-                <a href="{{ route('she.dashboard') }}" class="active">
-                    <i class="bi bi-speedometer2"></i> Dashboard
+                <a href="{{ route('she.dashboard') }}"
+                   class="{{ request()->routeIs('she.dashboard') ? 'active' : '' }}">
+                   <i class="bi bi-speedometer2"></i> Dashboard
                 </a>
             </li>
+
             <li>
-                <a href="#">
-                    <i class="bi bi-exclamation-circle"></i> Hyari Hatto
+                <a href="{{ route('she.hyarihatto') }}"
+                   class="{{ request()->routeIs('she.hyarihatto') ? 'active' : '' }}">
+                   <i class="bi bi-exclamation-circle"></i> Hyari Hatto
                 </a>
             </li>
-            <li>
-                <a href="#">
-                    <i class="bi bi-exclamation-triangle"></i> Insiden
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="bi bi-shield-check"></i> Komitmen K3
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="bi bi-bicycle"></i> Safety Riding
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="bi bi-binoculars"></i> Safety Patrol
-                </a>
-            </li>
+
+            <li><a href="#"><i class="bi bi-exclamation-triangle"></i> Insiden</a></li>
+            <li><a href="#"><i class="bi bi-shield-check"></i> Komitmen K3</a></li>
+            <li><a href="#"><i class="bi bi-bicycle"></i> Safety Riding</a></li>
+            <li><a href="#"><i class="bi bi-binoculars"></i> Safety Patrol</a></li>
         </ul>
 
         <div class="logout">
@@ -162,14 +153,17 @@
         </div>
     </nav>
 
-    <!-- Main Content (Contoh sederhana) -->
-    <div style="margin-left: 260px; padding: 2rem; background: #f9fafb; min-height: 100vh;">
-        <h1 style="color: #0f172a;">SHE Dashboard – PT AICC</h1>
-        <p class="text-muted">Welcome to the SHE Monitoring System.</p>
-    </div>
+    <!-- HEADER -->
+    <header class="main-header">
+        <h4 style="margin: 0; font-weight:600;">
+            {{ $title ?? 'SHE – PT AICC' }}
+        </h4>
+    </header>
 
-    <!-- Bootstrap JS (Opsional) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- MAIN CONTENT -->
+    <main class="content-wrapper">
+        @yield('content')
+    </main>
 
 </body>
 </html>
