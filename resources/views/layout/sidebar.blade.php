@@ -131,6 +131,7 @@
                    class="{{ request()->routeIs('she.dashboard') ? 'active' : '' }}">
                    <i class="bi bi-speedometer2"></i> Dashboard
                 </a>
+
             </li>
 
             <li>
@@ -153,12 +154,11 @@
         </div>
     </nav>
 
-    <!-- HEADER -->
-    <header class="main-header">
-        <h4 style="margin: 0; font-weight:600;">
-            {{ $title ?? 'SHE – PT AICC' }}
-        </h4>
-    </header>
+    <!-- Main Content (Contoh sederhana) -->
+    <div style="margin-left: 260px; padding: 2rem; background: #f9fafb; min-height: 100vh;">
+        <h1 style="color: #0f172a;">SHE Dashboard – PT AICC</h1>
+        <p class="text-muted">Welcome to the SHE Monitoring System.</p>
+    </div>
 
     <!-- MAIN CONTENT -->
     <main class="content-wrapper">
